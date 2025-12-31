@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Anniversary 💜</title>
+
+<style>
+/* ===================== RESET ===================== */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===================== BODY ===================== */
+body{
+  background: linear-gradient(135deg,#f3e8ff,#e0ccff);
+  overflow:hidden;
+  color:#4b006e;
+}
+
+/* ===================== COMMON ===================== */
+.hidden{display:none;}
+.center{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+}
+
+/* =================================================
+   STEP 1 : หน้าใส่รหัส
+================================================= */
+#passwordScreen{
+  height:100vh;
+  background:linear-gradient(135deg,#f1d9ff,#e5c8ff);
+}
+
+#passwordBox{
+  background:rgba(255,255,255,0.85);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 20px 40px rgba(0,0,0,.15);
+  text-align:center;
+}
+
+#passwordBox h1{
+  margin-bottom:15px;
+}
+
+#passwordBox input{
+  padding:12px;
+  width:200px;
+  text-align:center;
+  font-size:18px;
+  border-radius:12px;
+  border:2px solid #b77cff;
+  outline:none;
+}
+
+#passwordBox button{
+  margin-top:15px;
+  padding:10px 25px;
+  border:none;
+  border-radius:20px;
+  background:#a855f7;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* =================================================
+   STEP 2 : หลอดหัวใจ (เติมน้ำ)
+================================================= */
+#heartFillScreen{
+  height:100vh;
+  background:linear-gradient(135deg,#f0d9ff,#e6ccff);
+}
+
+/* กรอบหัวใจใหญ่ */
+.heart-container{
+  width:220px;
+  height:200px;
+  position:relative;
+}
+
+/* หัวใจ */
+.heart{
+  position:absolute;
+  width:220px;
+  height:200px;
+  background:#d8b4fe;
+  transform:rotate(-45deg);
+  border-radius:20px;
+  overflow:hidden;
+}
+
+/* ครึ่งซ้าย */
+.heart:before,
+.heart:after{
+  content:'';
+  position:absolute;
+  width:220px;
+  height:200px;
+  background:#d8b4fe;
+  border-radius:50%;
+}
+
+/* ซ้าย */
+.heart:before{
+  top:-100px;
+  left:0;
+}
+
+/* ขวา */
+.heart:after{
+  left:100px;
+  top:0;
+}
+
+/* น้ำที่เติม */
+.water{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:0%;
+  background:linear-gradient(180deg,#a855f7,#7e22ce);
+  transition:height .3s;
+}
+
+/* ข้อความ */
+.tap-text{
+  margin-top:30px;
+  font-size:18px;
+}
+
+/* =================================================
+   STEP 3 : จอดำ + ระยิบระยับ + พลุ
+================================================= */
+#transitionScreen{
+  position:fixed;
+  inset:0;
+  background:black;
+  overflow:hidden;
+}
+
+/* ระยิบระยับ */
+.sparkle{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 2s infinite;
+}
+
+@keyframes twinkle{
+  0%,100%{opacity:0}
+  50%{opacity:1}
+}
+
+/* พลุ */
+.firework{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:explode 1.2s forwards;
+}
+
+@keyframes explode{
+  from{transform:scale(0)}
+  to{transform:scale(20);opacity:0}
+}
+
+/* =================================================
+   STEP 4 : หน้าหลัก (ของเดิม)
+================================================= */
+#mainScreen{
+  height:100vh;
+  background:linear-gradient(135deg,#c4b5fd,#a78bfa);
+  position:relative;
+}
+
+/* กรอบกลาง */
+.card{
+  background:rgba(255,255,255,.9);
+  padding:25px;
+  border-radius:25px;
+  box-shadow:0 20px 50px rgba(0,0,0,.2);
+  text-align:center;
+}
+
+/* รูปคู่ */
+.main-img{
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  object-fit:cover;
+  border:5px solid #c084fc;
+}
+
+/* หัวใจลอย */
+.floating{
+  position:absolute;
+  animation:floatUp 12s linear infinite;
+  opacity:.9;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(100vh)}
+  to{transform:translateY(-120vh)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= STEP 1 ================= -->
+<div id="passwordScreen" class="center">
+  <div id="passwordBox">
+    <h1>💜 ใส่รหัสลับ 💜</h1>
+    <input id="passwordInput" type="password" placeholder="รหัส">
+    <br>
+    <button onclick="checkPassword()">ยืนยันรหัส</button>
+  </div>
+</div>
+
+<!-- ================= STEP 2 ================= -->
+<div id="heartFillScreen" class="center hidden">
+  <div class="heart-container">
+    <div class="heart">
+      <div id="water" class="water"></div>
+    </div>
+  </div>
+  <div class="tap-text">แตะหน้าจอเพื่อเติมหัวใจ 💜</div>
+</div>
+
+<!-- ================= STEP 3 ================= -->
+<div id="transitionScreen" class="hidden"></div>
+
+<!-- ================= STEP 4 ================= -->
+<div id="mainScreen" class="center hidden">
+  <div class="card">
+    <img src="main.jpg" class="main-img">
+    <h2>Earth 🤍 Opor</h2>
+    <h3>1Y • 08/02/25</h3>
+    <p>สุขสันต์วันครบรอบนะ 💜</p>
+  </div>
+</div>
+
+<script>
+/* ================= PASSWORD ================= */
+let used = false;
+
+function checkPassword(){
+  if(used) return;
+  const pass = document.getElementById('passwordInput').value;
+  if(pass === "080225"){
+    used = true;
+    document.getElementById('passwordScreen').classList.add('hidden');
+    document.getElementById('heartFillScreen').classList.remove('hidden');
+  }else{
+    alert("รหัสไม่ถูกต้อง");
+  }
+}
+
+/* ================= HEART FILL ================= */
+let level = 0;
+document.getElementById('heartFillScreen').addEventListener('click',()=>{
+  if(level >= 100) return;
+  level += 5;
+  document.getElementById('water').style.height = level + "%";
+  if(level >= 100){
+    setTimeout(startTransition,500);
+  }
+});
+
+/* ================= TRANSITION ================= */
+function startTransition(){
+  document.getElementById('heartFillScreen').classList.add('hidden');
+  const t = document.getElementById('transitionScreen');
+  t.classList.remove('hidden');
+
+  // ดาวระยิบ
+  for(let i=0;i<150;i++){
+    let s=document.createElement('div');
+    s.className='sparkle';
+    s.style.left=Math.random()*100+'vw';
+    s.style.top=Math.random()*100+'vh';
+    t.appendChild(s);
+  }
+
+  // พลุ
+  for(let i=0;i<12;i++){
+    let f=document.createElement('div');
+    f.className='firework';
+    f.style.left=Math.random()*100+'vw';
+    f.style.top=Math.random()*60+'vh';
+    f.style.background=`hsl(${Math.random()*360},100%,70%)`;
+    t.appendChild(f);
+  }
+
+  setTimeout(()=>{
+    t.classList.add('hidden');
+    document.getElementById('mainScreen').classList.remove('hidden');
+    createFloating();
+  },3000);
+}
+
+/* ================= FLOATING ================= */
+function createFloating(){
+  for(let i=0;i<18;i++){
+    let el=document.createElement('div');
+    el.className='floating';
+    el.innerHTML='💜';
+    el.style.left=Math.random()*100+'vw';
+    el.style.fontSize=20+Math.random()*20+'px';
+    el.style.animationDuration=10+Math.random()*10+'s';
+    document.body.appendChild(el);
+  }
+}
+</script>
+
+</body>
+</html>
